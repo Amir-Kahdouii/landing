@@ -1,20 +1,20 @@
 [
   {
+    "id": "video-T_4lN2uy24Q",
+    "title": "چطوری در گیت با یک بار Push روی دو ریموت کدها ارسال بشن؟",
+    "description": "توی این ویدیو درباره یک ترفند صحبت میکنیم که با یک بار push زدن بتونیم کد ها رو به دو سرور بفرستیم و فقط از یکی شون به عنوان منبع برای pull استفاده کنیم. #git #softwaredevelopment  #برنامه_نویسی",
+    "youtubeUrl": "https://www.youtube.com/watch?v=T_4lN2uy24Q",
+    "thumbnailUrl": "https://i.ytimg.com/vi/T_4lN2uy24Q/maxresdefault.jpg",
+    "duration": "۱ دقیقه",
+    "tag": "آموزش"
+  },
+  {
     "id": "video-AZ8LIE_Og8Y",
     "title": "ورک‌فلوی واقعی من برای ساخت فرانت‌اند با AI از صفر تا کدریویو",
     "description": "اگه بک‌اندی و هر بار با AI می‌خوای فرانت بسازی و وسط راه گیر می‌کنی، این ویدیو برای توئه. توش ورک‌فلویی رو که با آزمون و خطا بهش رسیدم رو معرفی میکنم:",
     "youtubeUrl": "https://www.youtube.com/watch?v=AZ8LIE_Og8Y",
     "thumbnailUrl": "https://i.ytimg.com/vi/AZ8LIE_Og8Y/maxresdefault.jpg",
     "duration": "۱۴ دقیقه",
-    "tag": "آموزش"
-  },
-  {
-    "id": "video-dXRyqTjAWpA",
-    "title": "هارنس هوش مصنوعی چیه؟ | What is AI harness",
-    "description": "توی این ویدیو، میخوایم ببینیم هارنس در ایجنت ها چیه و ایجنت از ترکیب چه اجزایی به وجود میاد. هارنس یک جز بسیار کلیدی در عملکرد یک ایجنت هوش مصنوعی محسوب میشه که بهش امکان تعامل واقعی با دنیای بیرون رو میده.",
-    "youtubeUrl": "https://www.youtube.com/watch?v=dXRyqTjAWpA",
-    "thumbnailUrl": "https://i.ytimg.com/vi/dXRyqTjAWpA/maxresdefault.jpg",
-    "duration": "۴ دقیقه",
     "tag": "آموزش"
   }
 ]
