@@ -1,20 +1,20 @@
 [
   {
+    "id": "video-1Wgt-k4kPxk",
+    "title": "با Gemini از ریپوهای برتر GitHub جا نمون | ساخت ربات تلگرام با Google Sheets",
+    "description": "توی این ویدیو با Gemini، Google sheets و Apps Script یه ربات تلگرام کاملاً رایگان می‌سازیم که هر روز سه ریپوی برتر هوش مصنوعی GitHub رو برامون ارسال کنه. Youtube: @AmirKahdouii",
+    "youtubeUrl": "https://www.youtube.com/watch?v=1Wgt-k4kPxk",
+    "thumbnailUrl": "https://i.ytimg.com/vi/1Wgt-k4kPxk/maxresdefault.jpg",
+    "duration": "۱۵ دقیقه",
+    "tag": "آموزش"
+  },
+  {
     "id": "video-T_4lN2uy24Q",
     "title": "چطوری در گیت با یک بار Push روی دو ریموت کدها ارسال بشن؟",
     "description": "توی این ویدیو درباره یک ترفند صحبت میکنیم که با یک بار push زدن بتونیم کد ها رو به دو سرور بفرستیم و فقط از یکی شون به عنوان منبع برای pull استفاده کنیم. #git #softwaredevelopment  #برنامه_نویسی",
     "youtubeUrl": "https://www.youtube.com/watch?v=T_4lN2uy24Q",
     "thumbnailUrl": "https://i.ytimg.com/vi/T_4lN2uy24Q/maxresdefault.jpg",
     "duration": "۱ دقیقه",
-    "tag": "آموزش"
-  },
-  {
-    "id": "video-AZ8LIE_Og8Y",
-    "title": "ورک‌فلوی واقعی من برای ساخت فرانت‌اند با AI از صفر تا کدریویو",
-    "description": "اگه بک‌اندی و هر بار با AI می‌خوای فرانت بسازی و وسط راه گیر می‌کنی، این ویدیو برای توئه. توش ورک‌فلویی رو که با آزمون و خطا بهش رسیدم رو معرفی میکنم:",
-    "youtubeUrl": "https://www.youtube.com/watch?v=AZ8LIE_Og8Y",
-    "thumbnailUrl": "https://i.ytimg.com/vi/AZ8LIE_Og8Y/maxresdefault.jpg",
-    "duration": "۱۴ دقیقه",
     "tag": "آموزش"
   }
 ]
