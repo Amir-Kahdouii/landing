@@ -1,20 +1,20 @@
 [
   {
+    "id": "video--_Ncf4zWeA8",
+    "title": "تجربه من از کار با ایجنت های کدنویسی |‌ Cursor, Claude Code, Codex",
+    "description": "بین این همه ایجنت کدنویسی، کدوم واقعاً به کار میاد؟ توی این ویدیو از تجربهٔ شخصی‌ام با ۶ ابزار هوش مصنوعی برای کدنویسی گفتم:",
+    "youtubeUrl": "https://www.youtube.com/watch?v=-_Ncf4zWeA8",
+    "thumbnailUrl": "https://i.ytimg.com/vi/-_Ncf4zWeA8/maxresdefault.jpg",
+    "duration": "۱۸ دقیقه",
+    "tag": "آموزش"
+  },
+  {
     "id": "video-tCLb7a6e4ZI",
     "title": "AI Skills, frontend-design  #ai #chatgpt",
     "description": "#هوش_مصنوعی",
     "youtubeUrl": "https://www.youtube.com/watch?v=tCLb7a6e4ZI",
     "thumbnailUrl": "https://i.ytimg.com/vi/tCLb7a6e4ZI/maxresdefault.jpg",
     "duration": "۱ دقیقه",
-    "tag": "آموزش"
-  },
-  {
-    "id": "video-1Wgt-k4kPxk",
-    "title": "با Gemini از ریپوهای برتر GitHub جا نمون | ساخت ربات تلگرام با Google Sheets",
-    "description": "توی این ویدیو با Gemini، Google sheets و Apps Script یه ربات تلگرام کاملاً رایگان می‌سازیم که هر روز سه ریپوی برتر هوش مصنوعی GitHub رو برامون ارسال کنه. Youtube: @AmirKahdouii",
-    "youtubeUrl": "https://www.youtube.com/watch?v=1Wgt-k4kPxk",
-    "thumbnailUrl": "https://i.ytimg.com/vi/1Wgt-k4kPxk/maxresdefault.jpg",
-    "duration": "۱۵ دقیقه",
     "tag": "آموزش"
   }
 ]
