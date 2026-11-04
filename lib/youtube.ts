@@ -91,14 +91,23 @@ export function formatPersianDuration(totalSeconds: number): string {
 }
 
 /**
- * Checks whether a video is a YouTube Short (<= 60 seconds duration or tagged/titled with #shorts).
+ * Normalizes video titles by collapsing multiple consecutive whitespace characters and trimming.
+ */
+export function normalizeTitle(rawTitle: string): string {
+  if (!rawTitle) return "";
+  return rawTitle.replace(/\s+/g, " ").trim();
+}
+
+/**
+ * Checks whether a video is a YouTube Short (duration <= 180 seconds (3 minutes) or tagged/titled with #shorts).
  */
 export function isYouTubeShort(
   totalSeconds: number,
   title: string = "",
   description: string = ""
 ): boolean {
-  if (totalSeconds > 0 && totalSeconds <= 60) {
+  // YouTube officially allows Shorts up to 3 minutes (180 seconds)
+  if (totalSeconds > 0 && totalSeconds <= 180) {
     return true;
   }
   const shortsPattern = /#shorts?\b/i;
@@ -154,7 +163,7 @@ export function mapYouTubeVideoToConfig(
 
   return {
     id: `video-${video.id}`,
-    title: video.snippet?.title?.trim() || "ویدیوی جدید یوتیوب",
+    title: normalizeTitle(video.snippet?.title || "ویدیوی جدید یوتیوب"),
     description: cleanDescription(video.snippet?.description || "آموزش تخصصی مهندسی نرم‌افزار در یوتیوب"),
     youtubeUrl: `https://www.youtube.com/watch?v=${video.id}`,
     thumbnailUrl,

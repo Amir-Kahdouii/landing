@@ -25,13 +25,20 @@ describe("Featured Video Highlights Showcase (Issue 04)", () => {
       expect(videos.length).toBeGreaterThan(0);
 
       videos.forEach((video) => {
-        expect(screen.getByText(video.title)).toBeInTheDocument();
+        const normalizedTitle = video.title.replace(/\s+/g, " ").trim();
+        expect(
+          screen.getByText(
+            (content) => content.replace(/\s+/g, " ").trim() === normalizedTitle
+          )
+        ).toBeInTheDocument();
         expect(screen.getByText(video.description)).toBeInTheDocument();
         expect(screen.getAllByText(video.tag).length).toBeGreaterThanOrEqual(1);
         expect(screen.getAllByText(video.duration).length).toBeGreaterThanOrEqual(1);
 
         // Check thumbnail image
-        const img = screen.getByAltText(video.title);
+        const img = screen.getByAltText(
+          (content) => content.replace(/\s+/g, " ").trim() === normalizedTitle
+        );
         expect(img).toBeInTheDocument();
         expect(img).toHaveAttribute("src", video.thumbnailUrl);
       });

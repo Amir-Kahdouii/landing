@@ -32,6 +32,14 @@ jobs:
           YOUTUBE_CHANNEL_ID: ${{ vars.YOUTUBE_CHANNEL_ID || '' }}
         run: node scripts/sync-youtube-videos.mjs
 
+      - name: Verify tests if videos were updated
+        run: |
+          if [ -n "$(git status --porcelain data/featured-videos.json)" ]; then
+            echo "New video changes detected. Verifying test suite before committing..."
+            npm ci
+            npm test
+          fi
+
       - name: Commit and push changes if updated
         run: |
           if [ -n "$(git status --porcelain data/featured-videos.json)" ]; then

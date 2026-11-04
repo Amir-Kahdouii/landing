@@ -49,11 +49,39 @@ function formatPersianDuration(totalSeconds) {
   return `${toPersianDigits(Math.max(1, minutes))} دقیقه`;
 }
 
-// Shorts detector
+// Title normalizer (collapses consecutive whitespace and trims)
+function normalizeTitle(rawTitle) {
+  if (!rawTitle) return "";
+  return rawTitle.replace(/\s+/g, " ").trim();
+}
+
+// Shorts detector (YouTube Shorts are <= 180 seconds (3 minutes) or tagged/titled with #shorts)
 function isYouTubeShort(totalSeconds, title = "", description = "") {
-  if (totalSeconds > 0 && totalSeconds <= 60) return true;
+  if (totalSeconds > 0 && totalSeconds <= 180) return true;
   const pattern = /#shorts?\b/i;
   return pattern.test(title) || pattern.test(description);
+}
+
+// Verification via YouTube Shorts endpoint: YouTube serves Shorts with status 200,
+// and redirects non-shorts to /watch with status 303.
+async function checkIsShort(videoId, totalSeconds, title = "", description = "") {
+  if (isYouTubeShort(totalSeconds, title, description)) {
+    return true;
+  }
+  if (videoId) {
+    try {
+      const res = await fetch(`https://www.youtube.com/shorts/${videoId}`, {
+        method: "HEAD",
+        redirect: "manual",
+      });
+      if (res.status === 200) {
+        return true;
+      }
+    } catch {
+      // Fallback to heuristic result if network check fails
+    }
+  }
+  return false;
 }
 
 // Clean description
@@ -151,8 +179,9 @@ async function main() {
     const title = video.snippet?.title || "";
     const description = video.snippet?.description || "";
 
-    if (isYouTubeShort(totalSeconds, title, description)) {
-      console.log(`- Skipping Short / short video: "${title}" (${totalSeconds}s)`);
+    const isShort = await checkIsShort(video.id, totalSeconds, title, description);
+    if (isShort) {
+      console.log(`- Skipping Short / short-form video: "${title}" (${totalSeconds}s)`);
       continue;
     }
 
@@ -169,7 +198,7 @@ async function main() {
 
     longVideos.push({
       id: `video-${video.id}`,
-      title: title.trim(),
+      title: normalizeTitle(title),
       description: cleanDescription(description) || "آموزش تخصصی مهندسی نرم‌افزار در یوتیوب",
       youtubeUrl: `https://www.youtube.com/watch?v=${video.id}`,
       thumbnailUrl,

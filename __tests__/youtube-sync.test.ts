@@ -5,12 +5,30 @@ import {
   formatPersianDuration,
   isYouTubeShort,
   cleanDescription,
+  normalizeTitle,
   mapYouTubeVideoToConfig,
   fetchLatestLongYouTubeVideos,
   YouTubeVideoItem,
 } from "@/lib/youtube";
 
 describe("YouTube Utility & Sync Module", () => {
+  describe("normalizeTitle", () => {
+    it("collapses multiple consecutive spaces and trims titles", () => {
+      expect(normalizeTitle("  AI Skills, frontend-design   #ai #chatgpt  ")).toBe(
+        "AI Skills, frontend-design #ai #chatgpt"
+      );
+    });
+
+    it("handles empty or falsy inputs gracefully", () => {
+      expect(normalizeTitle("")).toBe("");
+    });
+
+    it("preserves Persian text and ZWNJ (نیم‌فاصله)", () => {
+      expect(normalizeTitle("تجربهٔ من از  کار با ایجنت‌های   هوش مصنوعی")).toBe(
+        "تجربهٔ من از کار با ایجنت‌های هوش مصنوعی"
+      );
+    });
+  });
   describe("toPersianDigits", () => {
     it("converts Western digits to Persian numerals correctly", () => {
       expect(toPersianDigits("0123456789")).toBe("۰۱۲۳۴۵۶۷۸۹");
@@ -75,6 +93,11 @@ describe("YouTube Utility & Sync Module", () => {
       expect(isYouTubeShort(60, "آموزش در یک دقیقه", "")).toBe(true);
     });
 
+    it("detects videos up to 180 seconds (including 61s shorts) as Shorts", () => {
+      expect(isYouTubeShort(61, "AI Skills, frontend-design", "")).toBe(true);
+      expect(isYouTubeShort(180, "ویدیوی کوتاه سه‌دقیقه‌ای", "")).toBe(true);
+    });
+
     it("detects videos with #shorts in title or description", () => {
       expect(isYouTubeShort(120, "ترفند سریع CSS #Shorts", "")).toBe(true);
       expect(isYouTubeShort(120, "ترفند سریع CSS", "لینک به #shorts")).toBe(true);
@@ -123,6 +146,22 @@ describe("YouTube Utility & Sync Module", () => {
       expect(result.thumbnailUrl).toBe("https://i.ytimg.com/vi/xyz123/maxresdefault.jpg");
       expect(result.duration).toBe("۲۲ دقیقه");
       expect(result.tag).toBe("Vitest");
+    });
+
+    it("normalizes titles with multiple spaces when mapping", () => {
+      const mockItem: YouTubeVideoItem = {
+        id: "space123",
+        snippet: {
+          title: "AI Skills, frontend-design  #ai #chatgpt",
+          description: "توضیحات",
+        },
+        contentDetails: {
+          duration: "PT15M",
+        },
+      };
+
+      const result = mapYouTubeVideoToConfig(mockItem);
+      expect(result.title).toBe("AI Skills, frontend-design #ai #chatgpt");
     });
   });
 
