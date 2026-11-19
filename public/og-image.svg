@@ -153,6 +153,6 @@
     <!-- Label (LTR) -->
     <text x="60" y="34" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="16" font-weight="700" fill="#F8FAFC">GitHub</text>
     <!-- Handle (Right Aligned) -->
-    <text x="282" y="34" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="500" fill="#94A3B8" text-anchor="end">amirkahdouii</text>
+    <text x="282" y="34" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="500" fill="#94A3B8" text-anchor="end">amir-kahdouii</text>
   </g>
 </svg>

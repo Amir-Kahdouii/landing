@@ -112,7 +112,7 @@ export function buildOgSvg(config, avatarDataUri = null) {
 
   const youtubeHandle = escapeXml(config.NEXT_PUBLIC_YOUTUBE_HANDLE || "@amirkahdouii");
   const telegramHandle = escapeXml(config.NEXT_PUBLIC_TELEGRAM_HANDLE || "@amirkahdouii");
-  const githubHandle = escapeXml(config.NEXT_PUBLIC_GITHUB_HANDLE || "amirkahdouii");
+  const githubHandle = escapeXml(config.NEXT_PUBLIC_GITHUB_HANDLE || "amir-kahdouii");
 
   const avatarMarkup = avatarDataUri
     ? `

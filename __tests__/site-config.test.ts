@@ -26,7 +26,7 @@ describe("Site Configuration Environment Variables Integration", () => {
     expect(config.socials.youtube.url).toBe("https://youtube.com/@amirkahdouii");
     expect(config.socials.telegram.url).toBe("https://t.me/amirkahdouii");
     expect(config.socials.linkedin.url).toBe("https://linkedin.com/in/amirkahdouii");
-    expect(config.socials.github?.url).toBe("https://github.com/amirkahdouii");
+    expect(config.socials.github?.url).toBe("https://github.com/amir-kahdouii");
     expect(config.footer?.contactEmail).toBe("contact@amirkahdouii.com");
   });
 

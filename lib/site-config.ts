@@ -156,9 +156,9 @@ export function getSiteConfig(): SiteConfig {
     "شبکه‌سازی تخصصی، دستاوردهای شغلی و تجربیات مهندسی نرم‌افزار";
 
   const githubUrl =
-    process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/amirkahdouii";
+    process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/amir-kahdouii";
   const githubHandle =
-    process.env.NEXT_PUBLIC_GITHUB_HANDLE || "amirkahdouii";
+    process.env.NEXT_PUBLIC_GITHUB_HANDLE || "amir-kahdouii";
   const githubLabel =
     process.env.NEXT_PUBLIC_GITHUB_LABEL || "گیت‌هاب (GitHub)";
   const githubStat =

@@ -44,8 +44,8 @@
 
 ### ۱. کلون کردن مخزن
 ```bash
-git clone https://github.com/amirkahdouii/amirkahdouii.git
-cd amirkahdouii
+git clone https://github.com/amir-kahdouii/landing.git
+cd landing
 ```
 
 ### ۲. نصب وابستگی‌ها
