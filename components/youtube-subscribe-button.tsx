@@ -53,20 +53,34 @@ export function YouTubeSubscribeButton({
   const cleanHandle = (channelHandle || "amirkahdouii").replace(/^@/, "");
   const resolvedChannelId = channelId || "UC41IeMVmX2vUWKENtGb7ewQ";
 
-  const renderWidget = React.useCallback(() => {
-    if (typeof window !== "undefined" && window.gapi?.ytsubscribe && containerRef.current) {
+  const initWidget = React.useCallback(() => {
+    if (typeof window === "undefined" || !containerRef.current) return;
+
+    if (window.gapi?.ytsubscribe) {
       try {
-        window.gapi.ytsubscribe.go(containerRef.current);
-      } catch {
-        // Fallback gracefully
+        if (typeof window.gapi.ytsubscribe.render === "function") {
+          containerRef.current.innerHTML = "";
+          window.gapi.ytsubscribe.render(containerRef.current, {
+            channelid: resolvedChannelId,
+            channel: !resolvedChannelId ? cleanHandle : undefined,
+            layout,
+            theme,
+            count,
+          });
+        } else if (typeof window.gapi.ytsubscribe.go === "function") {
+          window.gapi.ytsubscribe.go(containerRef.current.parentElement || containerRef.current);
+        }
+      } catch (err) {
+        console.warn("YouTube subscribe button render notice:", err);
       }
     }
-  }, []);
+  }, [resolvedChannelId, cleanHandle, layout, theme, count]);
 
   React.useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
 
+    // Check if iframe is already present
     if (el.querySelector("iframe")) {
       setIsWidgetMounted(true);
       return;
@@ -80,36 +94,44 @@ export function YouTubeSubscribeButton({
 
     observer.observe(el, { childList: true, subtree: true });
 
-    renderWidget();
-    const timer = setTimeout(renderWidget, 1000);
+    // Initial render attempt if gapi is already on window
+    initWidget();
+
+    // Secondary attempts in case gapi is still initializing
+    const t1 = setTimeout(initWidget, 600);
+    const t2 = setTimeout(initWidget, 1500);
+    const t3 = setTimeout(initWidget, 3000);
 
     return () => {
       observer.disconnect();
-      clearTimeout(timer);
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
     };
-  }, [renderWidget]);
+  }, [initWidget]);
 
   return (
     <div
-      className={`relative inline-flex flex-col items-center justify-center transition-all duration-300 ${className}`}
+      className={`relative inline-flex flex-col items-center justify-center ${className}`}
     >
       <Script
         src="https://apis.google.com/js/platform.js"
         strategy="afterInteractive"
-        onLoad={renderWidget}
+        onLoad={initWidget}
       />
 
       {/* Official YouTube Subscribe Widget Host */}
+      {/* Kept in DOM without display:none so Google can always calculate dimensions and mount */}
       <div
         className={
           isWidgetMounted
-            ? "flex items-center justify-center p-2 rounded-full border border-red-500/20 bg-card/80 shadow-md shadow-red-500/10 min-h-[46px] min-w-[180px]"
-            : "hidden"
+            ? "relative opacity-100 pointer-events-auto flex items-center justify-center p-2 rounded-full border border-red-500/20 bg-card/80 shadow-md shadow-red-500/10 min-h-[46px] min-w-[180px] transition-all duration-300"
+            : "absolute opacity-0 pointer-events-none -z-10 min-h-[44px] min-w-[160px]"
         }
       >
         <div
           ref={containerRef}
-          className="g-ytsubscribe"
+          className="g-ytsubscribe flex items-center justify-center"
           data-channelid={resolvedChannelId}
           data-channel={!resolvedChannelId ? cleanHandle : undefined}
           data-layout={layout}
@@ -124,7 +146,7 @@ export function YouTubeSubscribeButton({
         target="_blank"
         rel="noopener noreferrer"
         size="lg"
-        className={`w-full max-w-xs sm:max-w-none sm:w-auto min-w-[200px] bg-red-600 hover:bg-red-700 text-white shadow-md shadow-red-600/20 gap-2.5 rounded-full px-6 group ${
+        className={`w-full max-w-xs sm:max-w-none sm:w-auto min-w-[200px] bg-red-600 hover:bg-red-700 text-white shadow-md shadow-red-600/20 gap-2.5 rounded-full px-6 group transition-all duration-300 ${
           isWidgetMounted ? "sr-only" : "inline-flex"
         }`}
       >

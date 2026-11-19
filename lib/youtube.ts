@@ -190,7 +190,7 @@ export function mapYouTubeVideoToConfig(
   return {
     id: `video-${videoId}`,
     videoId,
-    embedUrl: `https://www.youtube-nocookie.com/embed/${videoId}`,
+    embedUrl: `https://www.youtube.com/embed/${videoId}`,
     title: normalizeTitle(video.snippet?.title || "ویدیوی جدید یوتیوب"),
     description: cleanDescription(video.snippet?.description || "آموزش تخصصی مهندسی نرم‌افزار در یوتیوب"),
     youtubeUrl: `https://www.youtube.com/watch?v=${videoId}`,

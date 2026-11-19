@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { ArrowLeft, Play, X } from "lucide-react";
+import { ArrowLeft, Play, X, ExternalLink } from "lucide-react";
 import { SiteConfig, siteConfig as defaultSiteConfig } from "@/lib/site-config";
 import { Card, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -48,6 +48,12 @@ export function FeaturedVideos({
           const rawVideoId = video.videoId || video.youtubeUrl || video.id;
           const videoId = extractYouTubeVideoId(rawVideoId);
 
+          const originParam =
+            typeof window !== "undefined" && window.location?.origin
+              ? `&origin=${encodeURIComponent(window.location.origin)}`
+              : "";
+          const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1&rel=0${originParam}`;
+
           return (
             <Card
               key={video.id}
@@ -69,10 +75,11 @@ export function FeaturedVideos({
                   {isPlaying ? (
                     <div className="relative size-full">
                       <iframe
-                        src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&enablejsapi=1&rel=0`}
+                        src={embedUrl}
                         title={video.title}
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         allowFullScreen
+                        referrerPolicy="strict-origin-when-cross-origin"
                         className="size-full border-0"
                       />
                       <button
@@ -150,6 +157,24 @@ export function FeaturedVideos({
                     {video.description}
                   </CardDescription>
                 </CardHeader>
+
+                {/* Helpful fallback banner when player is active in case of VPN bot verification */}
+                {isPlaying && (
+                  <div className="px-5 pb-2">
+                    <div className="flex items-center justify-between text-xs text-muted-foreground bg-muted/30 rounded-lg p-2.5 border border-border/40">
+                      <span>در صورت خطای تأیید ربات (فیلترشکن):</span>
+                      <a
+                        href={video.youtubeUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-red-500 hover:text-red-600 font-medium inline-flex items-center gap-1 transition-colors"
+                      >
+                        <span>تماشا در یوتیوب</span>
+                        <ExternalLink className="size-3" />
+                      </a>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Action Buttons in Footer: Play in-page or Watch on YouTube */}

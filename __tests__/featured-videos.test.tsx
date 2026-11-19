@@ -145,7 +145,7 @@ describe("Featured Video Highlights Showcase (Issue 04)", () => {
       expect(iframe.tagName.toLowerCase()).toBe("iframe");
       expect(iframe).toHaveAttribute(
         "src",
-        expect.stringContaining("youtube-nocookie.com/embed/")
+        expect.stringContaining("youtube.com/embed/")
       );
       expect(iframe).toHaveAttribute("allowfullscreen");
 

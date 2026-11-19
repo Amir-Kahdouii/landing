@@ -199,7 +199,7 @@ async function main() {
     longVideos.push({
       id: `video-${video.id}`,
       videoId: video.id,
-      embedUrl: `https://www.youtube-nocookie.com/embed/${video.id}`,
+      embedUrl: `https://www.youtube.com/embed/${video.id}`,
       title: normalizeTitle(title),
       description: cleanDescription(description) || "آموزش تخصصی مهندسی نرم‌افزار در یوتیوب",
       youtubeUrl: `https://www.youtube.com/watch?v=${video.id}`,
