@@ -6,12 +6,33 @@ import {
   isYouTubeShort,
   cleanDescription,
   normalizeTitle,
+  extractYouTubeVideoId,
   mapYouTubeVideoToConfig,
   fetchLatestLongYouTubeVideos,
   YouTubeVideoItem,
 } from "@/lib/youtube";
 
 describe("YouTube Utility & Sync Module", () => {
+  describe("extractYouTubeVideoId", () => {
+    it("extracts video ID from standard watch URL", () => {
+      expect(extractYouTubeVideoId("https://www.youtube.com/watch?v=cHsXci-57D8")).toBe("cHsXci-57D8");
+      expect(extractYouTubeVideoId("https://youtube.com/watch?v=VphKi9WWzyE&t=10s")).toBe("VphKi9WWzyE");
+    });
+
+    it("extracts video ID from short URLs and embed URLs", () => {
+      expect(extractYouTubeVideoId("https://youtu.be/cHsXci-57D8")).toBe("cHsXci-57D8");
+      expect(extractYouTubeVideoId("https://www.youtube.com/embed/VphKi9WWzyE")).toBe("VphKi9WWzyE");
+    });
+
+    it("handles id with video- prefix or plain video ID", () => {
+      expect(extractYouTubeVideoId("video-cHsXci-57D8")).toBe("cHsXci-57D8");
+      expect(extractYouTubeVideoId("cHsXci-57D8")).toBe("cHsXci-57D8");
+    });
+
+    it("handles empty or falsy strings gracefully", () => {
+      expect(extractYouTubeVideoId("")).toBe("");
+    });
+  });
   describe("normalizeTitle", () => {
     it("collapses multiple consecutive spaces and trims titles", () => {
       expect(normalizeTitle("  AI Skills, frontend-design   #ai #chatgpt  ")).toBe(

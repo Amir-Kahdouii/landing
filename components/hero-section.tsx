@@ -1,9 +1,9 @@
 import * as React from "react";
-import { ArrowLeft } from "lucide-react";
 import { SiteConfig, siteConfig as defaultSiteConfig } from "@/lib/site-config";
 import { Avatar } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { YouTubeIcon, TelegramIcon } from "@/components/icons";
+import { TelegramIcon } from "@/components/icons";
+import { YouTubeSubscribeButton } from "@/components/youtube-subscribe-button";
 
 export interface HeroSectionProps {
   config?: SiteConfig;
@@ -60,18 +60,13 @@ export function HeroSection({
 
       {/* Primary Action Buttons (YouTube & Telegram) */}
       <div className="mt-8 flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row sm:gap-4">
-        {/* YouTube Primary CTA */}
-        <Button
-          href={config.primaryCta.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          size="lg"
-          className="w-full max-w-xs sm:max-w-none sm:w-auto min-w-[200px] bg-red-600 hover:bg-red-700 text-white shadow-md shadow-red-600/20 gap-2.5 rounded-full px-6"
-        >
-          <YouTubeIcon className="size-4 shrink-0 text-white" />
-          <span>{config.primaryCta.label}</span>
-          <ArrowLeft className="size-4 shrink-0 transition-transform duration-200 group-hover:-translate-x-1" />
-        </Button>
+        {/* Interactive YouTube Subscribe CTA */}
+        <YouTubeSubscribeButton
+          channelId={config.socials?.youtube?.channelId || "UC41IeMVmX2vUWKENtGb7ewQ"}
+          channelHandle={config.socials?.youtube?.handle || "amirkahdouii"}
+          fallbackHref={config.primaryCta.href}
+          fallbackLabel={config.primaryCta.label}
+        />
 
         {/* Telegram Secondary CTA */}
         <Button

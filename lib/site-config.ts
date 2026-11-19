@@ -11,15 +11,18 @@ export interface SocialChannelConfig {
   url: string;
   handle: string;
   label: string;
+  channelId?: string;
   stat?: string;
   description?: string;
 }
 
 export interface FeaturedVideoConfig {
   id: string;
+  videoId?: string;
   title: string;
   description: string;
   youtubeUrl: string;
+  embedUrl?: string;
   thumbnailUrl: string;
   duration: string;
   tag: string;
@@ -122,6 +125,8 @@ export function getSiteConfig(): SiteConfig {
     process.env.NEXT_PUBLIC_YOUTUBE_URL || "https://youtube.com/@amirkahdouii";
   const youtubeHandle =
     process.env.NEXT_PUBLIC_YOUTUBE_HANDLE || "@amirkahdouii";
+  const youtubeChannelId =
+    process.env.NEXT_PUBLIC_YOUTUBE_CHANNEL_ID || "UC41IeMVmX2vUWKENtGb7ewQ";
   const youtubeLabel =
     process.env.NEXT_PUBLIC_YOUTUBE_LABEL || "یوتیوب (YouTube)";
   const youtubeStat =
@@ -225,6 +230,7 @@ export function getSiteConfig(): SiteConfig {
       youtube: {
         url: youtubeUrl,
         handle: youtubeHandle,
+        channelId: youtubeChannelId,
         label: youtubeLabel,
         stat: youtubeStat,
         description: youtubeDesc,

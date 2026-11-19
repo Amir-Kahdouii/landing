@@ -100,7 +100,7 @@ function cleanDescription(raw, maxLength = 220) {
 async function main() {
   const apiKey = process.env.YOUTUBE_API_KEY;
   const channelHandle = (process.env.YOUTUBE_CHANNEL_HANDLE || "amirkahdouii").replace(/^@/, "");
-  const channelId = process.env.YOUTUBE_CHANNEL_ID;
+  const channelId = process.env.YOUTUBE_CHANNEL_ID || "UC41IeMVmX2vUWKENtGb7ewQ";
 
   if (!apiKey) {
     console.error("❌ Error: YOUTUBE_API_KEY environment variable is missing.");
@@ -198,6 +198,8 @@ async function main() {
 
     longVideos.push({
       id: `video-${video.id}`,
+      videoId: video.id,
+      embedUrl: `https://www.youtube-nocookie.com/embed/${video.id}`,
       title: normalizeTitle(title),
       description: cleanDescription(description) || "آموزش تخصصی مهندسی نرم‌افزار در یوتیوب",
       youtubeUrl: `https://www.youtube.com/watch?v=${video.id}`,

@@ -139,6 +139,30 @@ export function cleanDescription(rawDescription: string, maxLength: number = 220
 }
 
 /**
+ * Extracts a standard 11-character YouTube video ID from various URL patterns or ID formats.
+ */
+export function extractYouTubeVideoId(input: string): string {
+  if (!input) return "";
+  const trimmed = input.trim();
+  // Strip "video-" prefix if present
+  if (trimmed.startsWith("video-")) {
+    return trimmed.slice(6);
+  }
+  // Try matching standard YouTube URL formats: watch?v=, youtu.be/, embed/, shorts/
+  const match = trimmed.match(
+    /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|shorts\/))([a-zA-Z0-9_-]{11})/
+  );
+  if (match && match[1]) {
+    return match[1];
+  }
+  // If it's already an 11-char ID
+  if (/^[a-zA-Z0-9_-]{11}$/.test(trimmed)) {
+    return trimmed;
+  }
+  return trimmed;
+}
+
+/**
  * Maps a YouTube API Video Item into a FeaturedVideoConfig object.
  */
 export function mapYouTubeVideoToConfig(
@@ -161,11 +185,15 @@ export function mapYouTubeVideoToConfig(
     video.snippet?.tags?.[0] ||
     "آموزش";
 
+  const videoId = extractYouTubeVideoId(video.id);
+
   return {
-    id: `video-${video.id}`,
+    id: `video-${videoId}`,
+    videoId,
+    embedUrl: `https://www.youtube-nocookie.com/embed/${videoId}`,
     title: normalizeTitle(video.snippet?.title || "ویدیوی جدید یوتیوب"),
     description: cleanDescription(video.snippet?.description || "آموزش تخصصی مهندسی نرم‌افزار در یوتیوب"),
-    youtubeUrl: `https://www.youtube.com/watch?v=${video.id}`,
+    youtubeUrl: `https://www.youtube.com/watch?v=${videoId}`,
     thumbnailUrl,
     duration: durationText,
     tag,

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { siteConfig } from "@/lib/site-config";
 import { FeaturedVideos } from "@/components/featured-videos";
 
@@ -120,6 +120,44 @@ describe("Featured Video Highlights Showcase (Issue 04)", () => {
         <FeaturedVideos config={undefinedConfig} />
       );
       expect(undefinedContainer.firstChild).toBeNull();
+    });
+  });
+
+  describe("Interactive YouTube IFrame Player", () => {
+    it("dynamically mounts YouTube iframe when user clicks on play in page", () => {
+      render(<FeaturedVideos config={siteConfig} />);
+
+      const firstVideo = (siteConfig.featuredVideos || [])[0];
+      expect(firstVideo).toBeDefined();
+
+      // Initially no iframe is rendered
+      expect(screen.queryByTitle(firstVideo.title)).not.toBeInTheDocument();
+
+      // Click "پخش در صفحه" button
+      const playButtons = screen.getAllByRole("button", {
+        name: /پخش در صفحه|پخش ویدیوی/i,
+      });
+      fireEvent.click(playButtons[0]);
+
+      // YouTube Iframe should now be mounted
+      const iframe = screen.getByTitle(firstVideo.title);
+      expect(iframe).toBeInTheDocument();
+      expect(iframe.tagName.toLowerCase()).toBe("iframe");
+      expect(iframe).toHaveAttribute(
+        "src",
+        expect.stringContaining("youtube-nocookie.com/embed/")
+      );
+      expect(iframe).toHaveAttribute("allowfullscreen");
+
+      // Stop/close player button is present
+      const closeButtons = screen.getAllByRole("button", {
+        name: /بستن پلیر|توقف پخش/i,
+      });
+      expect(closeButtons.length).toBeGreaterThanOrEqual(1);
+
+      // Clicking close button restores thumbnail
+      fireEvent.click(closeButtons[0]);
+      expect(screen.queryByTitle(firstVideo.title)).not.toBeInTheDocument();
     });
   });
 });
