@@ -159,5 +159,22 @@ describe("Featured Video Highlights Showcase (Issue 04)", () => {
       fireEvent.click(closeButtons[0]);
       expect(screen.queryByTitle(firstVideo.title)).not.toBeInTheDocument();
     });
+
+    it("closes the modal dialog when Escape key is pressed", () => {
+      render(<FeaturedVideos config={siteConfig} />);
+
+      const playButtons = screen.getAllByRole("button", {
+        name: /پخش در صفحه|پخش ویدیوی/i,
+      });
+      fireEvent.click(playButtons[0]);
+
+      const dialog = screen.getByRole("dialog");
+      expect(dialog).toBeInTheDocument();
+      expect(dialog).toHaveAttribute("aria-modal", "true");
+
+      // Press Escape
+      fireEvent.keyDown(window, { key: "Escape" });
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    });
   });
 });
